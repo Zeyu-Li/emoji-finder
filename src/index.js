@@ -5,9 +5,7 @@ import Table from './Table';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Table />
-  </React.StrictMode>,
+  <Table />,
   document.getElementById('root')
 );
 

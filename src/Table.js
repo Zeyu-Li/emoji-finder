@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 
 
 class Table extends Component {
-    // a Game object that acts like the main container for this game "engine"
+    // a table
 
-    // state var containing all the levels and necessary info on those levels
     state = {
         data: [],
         emojis: [],
@@ -23,7 +22,7 @@ class Table extends Component {
         // once we get the json, this is called
 
         // for each emoji, set row
-        for (let emoji of Object.entries(this.state.data)) {
+        for (let emoji of this.state.data) {
 
             let single_emoji = {
                 text: emoji.emoji,
@@ -40,7 +39,7 @@ class Table extends Component {
     componentDidMount() {
         // gets json and calls all the necessary inits
         this.setState({loaded: true})
-        fetch('json/data.json')
+        fetch('json/emoji.json')
             .then(data => data.json())
             .then(data => this.setState({data}))
             .then(_ => this.init())
@@ -51,12 +50,13 @@ class Table extends Component {
         return (
             <div className="main_content">
                 <table>
-                    {this.state.loaded ? "loading... Perhaps you are not running it on a server": 
-                    this.state.emojis.map((element, i) => {
-                        return (
-                            <tr>{element}</tr>
-                        )
-                    })
+                    {
+                    this.state.loaded ? "Loading... Perhaps you are not running it on a server" : 
+                        this.state.emojis.map((element) => {
+                            return (
+                                <tr><th>{element.text}</th></tr>
+                            )
+                        })
                     }
                 </table>
             </div>
