@@ -1,6 +1,6 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import Table from './Table';
-import Search from './Search';
+// import Search from './Search';
 
 class App extends Component {
 
@@ -12,7 +12,8 @@ class App extends Component {
         // pages: 1,
         searchStr: '',
         loaded: false,
-        reload: false
+        reload: false,
+        copy_msg: false
     }
 
     // constructor(props) {
@@ -25,10 +26,10 @@ class App extends Component {
         // mounts json
         this.setState({loaded: false})
         fetch('json/emoji.json')
-        .then(data => data.json())
-        .then(data => this.setState({data}))
-        .then(_ => this.init())
-        .then(data => this.setState({data, loaded: true}))
+            .then(data => data.json())
+            .then(data => this.setState({data}))
+            .then(_ => this.init())
+            .then(data => this.setState({data, loaded: true}))
     }
     
     init() {
@@ -53,7 +54,7 @@ class App extends Component {
                 unicode_version: emoji.unicode_version
             }
             // assuming emojis are in order of categories
-            if (category_ != emoji.category) {
+            if (category_ !== emoji.category) {
                 categories[category_] = tmp
                 category_ = emoji.category
                 tmp = []
@@ -64,10 +65,13 @@ class App extends Component {
 
     this.setState({emojis: categories})
     this.setState({rendered_emojis: categories})
-
     // debug
     // console.log(this.state.emojis)
+    }
 
+    copy_toggle() {
+        console.log(this.state.copy_msg)
+        this.setState({copy_msg: !this.state.copy_msg})
     }
 
     // TODO: move to search
@@ -82,6 +86,7 @@ class App extends Component {
             categories[item[0]] = item[1].filter(emoji => {
                 return (emoji.description.includes(search_str) || emoji.aliases.includes(search_str) || emoji.tags.join().includes(search_str))
             })
+            return categories[item[0]]
         })
         // console.log(categories)
         this.setState({rendered_emojis: categories,searchStr: search_str, loaded: !this.state.loaded})
@@ -90,7 +95,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="main_content">
+            <div className="main_content" key="App">
                 {/* searching */}
             <div className="search">
                 <input id="searchInput" type="text" placeholder="Search for Emoji" size="20" onChange={this.searchInput} title="Search Emoji"></input>
@@ -98,8 +103,9 @@ class App extends Component {
             </div>
 
                 {/* <Search /> */}
-                {this.state.loaded ? <Table data={this.state.rendered_emojis}/>: <p className="none">...</p>}
-                {this.state.loaded ? <p className="none">...</p> :<Table data={this.state.rendered_emojis}/>}
+                {this.state.loaded ? <Table data={this.state.rendered_emojis} msg={this.copy_toggle.bind(this)} key="table1"/>: <p className="none">...</p>}
+                {this.state.loaded ? <p className="none">...</p> :<Table data={this.state.rendered_emojis} msg={this.copy_toggle.bind(this)} />}
+                {this.state.copy_msg ? <p id="notice">Copied Emoji</p>: <p></p>}
             </div>
         )
     }

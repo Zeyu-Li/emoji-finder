@@ -10,7 +10,7 @@ body {
 }
 
 /* transitions */
-.btn, #searchInput, tbody tr {
+.btn, #searchInput, tbody tr, #notice {
   transition: .2s;
   -moz-transition: .2s;
   -webkit-transition: .2s;
@@ -134,4 +134,15 @@ table tr:nth-child(even){
 
 tbody tr:hover {
   background-color: #c0c0c0;
+}
+
+/* notice */
+#notice {
+  position: sticky; 
+  bottom: 3vh;
+  margin-right: 5vw;
+  float: right;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f5ff68;
 }
