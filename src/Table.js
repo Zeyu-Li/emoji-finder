@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 // Table class
 
 class Table extends Component {
-    // a table
+    // a table containing a selection of emojis
     state = {
         emojis: this.props.data
     }
     
     copy(text) {
         // copies to clipboard
-        // debug
         let emoji = text.currentTarget.dataset.id
         let textField = document.createElement('textarea')
         textField.innerText = emoji
@@ -21,8 +20,6 @@ class Table extends Component {
         this.props.msg()
 
         setTimeout(() => {this.props.msg()}, 3000)
-        // console.log(text.currentTarget.dataset.id )
-        // document.execCommand('copy')
     }
 
     // renderNextPage() {
@@ -76,12 +73,13 @@ class Table extends Component {
                 <div>
                 <h1>{item[0]}</h1>
                 <table>
+                    {/* header row */}
                     <thead>
                         <tr>
-                        <th scope="col">Emoji</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Aliases and Tags</th>
-                        <th scope="col">Unicode Version</th>
+                            <th scope="col">Emoji</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Aliases and Tags</th>
+                            <th scope="col">Unicode Version</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,6 +94,7 @@ return (<tr onClick={this.copy.bind(this)} data-id={element.text} ><td>{element.
 
     
     render() {
+        // render all pages
         return (
             <div className="table">
                 {this.renderAllPages()}

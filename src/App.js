@@ -15,12 +15,6 @@ class App extends Component {
         reload: false,
         copy_msg: false
     }
-
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {searchStr: ''}
-    //     this.searchInput = this.searchInput.bind(this);
-    // } 
     
     componentDidMount() {
         // mounts json
@@ -43,7 +37,6 @@ class App extends Component {
 
         // for each emoji, set row
         for (let emoji of this.state.data) {
-
             // set emoji data
             let single_emoji = {
                 text: emoji.emoji,
@@ -70,25 +63,29 @@ class App extends Component {
     }
 
     copy_toggle() {
-        console.log(this.state.copy_msg)
+        // after copies onto clipboard, display message
+        // console.log(this.state.copy_msg)
         this.setState({copy_msg: !this.state.copy_msg})
     }
 
     // TODO: move to search
     searchInput = (event) => {
         let search_str = event.target.value.toLowerCase()
-        // console.log(search_str)
-        // filters through all the emoji names
-        // console.log(this.state.emojis)
         let categories = {}
-
+        // debug
+        // console.log(search_str)
+        // console.log(this.state.emojis)
+        
+        // for every emojis category
         Object.entries(this.state.emojis).map(item => {
+            // filters through all the emoji names
             categories[item[0]] = item[1].filter(emoji => {
                 return (emoji.description.includes(search_str) || emoji.aliases.includes(search_str) || emoji.tags.join().includes(search_str))
             })
             return categories[item[0]]
         })
-        // console.log(categories)
+        
+        // set state so it can rerender
         this.setState({rendered_emojis: categories,searchStr: search_str, loaded: !this.state.loaded})
         // console.log(this.state.rendered_emojis, this.state.loaded)
     }
@@ -101,10 +98,13 @@ class App extends Component {
                 <input id="searchInput" type="text" placeholder="Search for Emoji" size="20" onChange={this.searchInput} title="Search Emoji"></input>
                 <button className="btn" type="submit">Search</button>
             </div>
+                {/* <Search /> (Scrapped*/}
 
-                {/* <Search /> */}
+                {/* table */}
                 {this.state.loaded ? <Table data={this.state.rendered_emojis} msg={this.copy_toggle.bind(this)} key="table1"/>: <p className="none">...</p>}
                 {this.state.loaded ? <p className="none">...</p> :<Table data={this.state.rendered_emojis} msg={this.copy_toggle.bind(this)} />}
+
+                {/* copied notice */}
                 {this.state.copy_msg ? <p id="notice">Copied Emoji</p>: <p></p>}
             </div>
         )
