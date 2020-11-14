@@ -3393,7 +3393,7 @@
   , "description": "person shrugging"
   , "category": "People & Body"
   , "aliases": [
-      "shrug"
+      "shrug", "idk"
     ]
   , "tags": [
     ]
@@ -3406,7 +3406,7 @@
   , "description": "man shrugging"
   , "category": "People & Body"
   , "aliases": [
-      "man_shrugging"
+      "man_shrugging", "idk"
     ]
   , "tags": [
     ]
@@ -3419,7 +3419,7 @@
   , "description": "woman shrugging"
   , "category": "People & Body"
   , "aliases": [
-      "woman_shrugging"
+      "woman_shrugging", "idk"
     ]
   , "tags": [
     ]

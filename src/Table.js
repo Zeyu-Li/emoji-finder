@@ -3,56 +3,31 @@ import React, { Component } from 'react'
 
 class Table extends Component {
     // a table
-
     state = {
-        data: [],
-        emojis: [],
-        category: "",
-        pages: 1,
-        loaded: false,
-        reload: false
+        emojis: this.props.data
     }
     
-    componentDidMount() {
-        // mounts json
-        this.setState({loaded: true})
-        fetch('json/emoji.json')
-        .then(data => data.json())
-        .then(data => this.setState({data}))
-        .then(_ => this.init())
-        .then(data => this.setState({data, loaded: false}))
-    }
-    
-    init() {
-        // once we get the json, this is called
+    copy(text) {
+        // copies to clipboard
+        // debug
+        let emoji = text.currentTarget.dataset.id
+        let textField = document.createElement('textarea')
+        textField.innerText = emoji
+        document.body.appendChild(textField)
+        textField.select()
+        document.execCommand('copy')
+        textField.remove()
 
-        // set the first category 
-        this.setState({
-            category: this.state.data[0].category
-        })
 
-        // for each emoji, set row
-        for (let emoji of this.state.data) {
-
-            // set emoji data
-            let single_emoji = {
-                text: emoji.emoji,
-                description: emoji.description,
-                category: emoji.category,
-                aliases: emoji.aliases,
-                tags: emoji.tags,
-                unicode_version: emoji.unicode_version
-            }
-            // push single emoji into emojis state
-            this.state.emojis.push(single_emoji)
-        }
+        // console.log(text.currentTarget.dataset.id )
+        // document.execCommand('copy')
     }
 
     renderNextPage() {
-        let pages = this.state.pages
+        // let pages = this.state.pages
         return (
-            <div key={this.state.category}>
-            <h1>{this.state.category}</h1><table>
+            <div>
+            <h1>{this.props.data.category}</h1><table>
                 <thead>
                     <tr>
                     <th scope="col">Emoji</th>
@@ -63,35 +38,65 @@ class Table extends Component {
                 </thead>
                 <tbody>
             {
-            // once loaded show the first category
-            this.state.loaded ? <tr><th>...</th></tr>: 
-            this.state.emojis.map((element, index) => {
+            this.props.data.emojis.map((element, index) => {
                 if (element.category === this.state.category) {
                     return (
                         // remove duplicates of tags and aliases 
-                        <tr><td>{element.text}</td><td>{element.description}</td><td>{[...new Set(element.tags.concat(element.tags))].join(", ")} </td><td>{element.unicode_version}</td></tr>
+                        <tr onClick={this.copy.bind(this)} data-id={element.text}><td>{element.text}</td><td>{element.description}</td><td>{[...new Set(element.tags.concat(element.aliases))].join(", ")} </td><td>{element.unicode_version}</td></tr>
                     )
-                } else if (pages !== this.state.pages) {
-                    // set next category and end map
-                    this.state.category = element.category
-                    this.state.pages++
-                    return
-                }
+                } 
+                // else if (pages !== this.state.pages) {
+                //     // set next category and end map
+                //     this.state.category = element.category
+                //     this.state.pages++
+                //     return
+                // }
             })
             }
             </tbody></table></div>
         )
     }
 
-    search_emoji = (string) => {
-        // filters through all the emoji names
-        ;
+    renderAllPages() {
+        // render all the pages
+
+        // debug
+        // console.log(this.state.emojis)
+
+        // for each entry
+        return Object.entries(this.state.emojis).map((item, index) => {
+            // console.log(category)
+            // if empty, don't display anything
+            if (!item[1].length) {
+                return
+            }
+            return (
+                <div>
+                <h1>{item[0]}</h1>
+                <table>
+                    <thead>
+                        <tr>
+                        <th scope="col">Emoji</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Aliases and Tags</th>
+                        <th scope="col">Unicode Version</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {item[1].map(element => {
+                            // console.log(element[1].text)
+return (<tr onClick={this.copy.bind(this)} data-id={element.text} ><td>{element.text}</td><td>{element.description}</td><td>{[...new Set(element.tags.concat(element.aliases))].join(", ")} </td><td>{element.unicode_version}</td></tr>)
+                        })}
+</tbody></table></div>
+            )
+        })
     }
+
     
     render() {
         return (
             <div className="table">
-                {this.renderNextPage()}
+                {this.renderAllPages()}
             </div>
         )
     }

@@ -6,7 +6,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #cccccc;
+  background-color: #e4e4e4;
+}
+
+/* transitions */
+.btn, #searchInput, tbody tr {
+  transition: .2s;
+  -moz-transition: .2s;
+  -webkit-transition: .2s;
 }
 
 code {
@@ -21,44 +28,94 @@ h1 {
 .main_content {
   margin: auto 0;
   padding-top: 10px;
+  margin-bottom: 100px;
 }
 
 
 /* search bar */
 .search {
-  margin-top: 20vh;
-  margin-bottom: 20vh;
+  margin-top: 17vh;
+  margin-bottom: 10vh;
   text-align: center;
-    padding: 8px 16px;
+  padding: 8px 16px;
 }
 
 #searchInput {
   border-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   padding: 8px 16px;
+  border: 1px solid #ced4da;
+  font-size: 1.5rem;
+}
+
+#searchInput:focus {
+  background-color: #fff;
+  outline: 0;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
 .btn {
   padding: 8px 16px;
   border-radius: 5px;
-  background-color: #4CAF50;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border: 1px solid #ced4da;
+  border-left: 0px;
+  background-color: #5fca62;
+  font-size: 1.5rem;
 
 }
 
 .btn:hover{
-  background-color: #287a2a;
+  background-color: #4ba84c;
+}
+.btn:active{
+  background-color: #7bdb7c;
+}
 
+.btn:focus {
+  outline: 0;
+}
+
+.none {
+  display: none;
 }
 
 /* tables */
 table {
-  
+  border-spacing: 0px;
   margin-left: auto;
   margin-right: auto;
+  max-width: 1000px;
+  width: 85vw;
+}
+@media only screen and (max-width: 600px) {
+  table {
+    width: 100vw;
+  }
+  .btn {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  #searchInput {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}
+
+tr {
+  cursor: pointer;
 }
 
 table th, table td {
-  border: 1px solid #ddd;
   padding: 8px;
+}
+table tr {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  border-collapse: collapse;
 }
 
 thead {
@@ -76,5 +133,5 @@ table tr:nth-child(even){
 }
 
 tbody tr:hover {
-  background-color: #acacac;
+  background-color: #c0c0c0;
 }
