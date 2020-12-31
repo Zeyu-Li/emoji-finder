@@ -70,7 +70,7 @@ class Table extends Component {
                 return <div></div>
             }
             return (
-                <div>
+                <div key={`table${index}`}>
                 <h1>{item[0]}</h1>
                 <table>
                     {/* header row */}
@@ -83,9 +83,9 @@ class Table extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {item[1].map(element => {
+                        {item[1].map((element, idx) => {
                             // console.log(element[1].text)
-return (<tr onClick={this.copy.bind(this)} data-id={element.text} ><td>{element.text}</td><td>{element.description}</td><td>{[...new Set(element.tags.concat(element.aliases))].join(", ")} </td><td>{element.unicode_version}</td></tr>)
+return (<tr onClick={this.copy.bind(this)} data-id={element.text} key={`table${index}-${idx}`} ><td>{element.text}</td><td>{element.description}</td><td>{[...new Set(element.tags.concat(element.aliases))].join(", ")} </td><td>{element.unicode_version}</td></tr>)
                         })}
 </tbody></table></div>
             )
