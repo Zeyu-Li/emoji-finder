@@ -16,10 +16,22 @@ Clicking on a row in the table will copy the emoji to the clipboard
 
 
 
+## Development
+
+Needs Node 20.19+ or 22.12+ and yarn.
+
+```sh
+yarn install
+yarn start   # dev server
+yarn build   # writes build/, which GitHub Pages serves, so commit it after building
+```
+
+
+
 # Acknowledgements
 
 Built with React
 
 * emoji json file from https://github.com/github/gemoji/blob/master/db/emoji.json
-* [create-react-app](https://github.com/facebook/create-react-app)
+* [Vite](https://vite.dev)
 * icon is an Microsoft emoji (https://emojipedia.org/open-book/)

@@ -21,22 +21,23 @@ class App extends Component {
         this.setState({loaded: false})
         fetch('json/emoji.json')
             .then(data => data.json())
-            .then(data => this.setState({data}))
-            .then(_ => this.init())
-            .then(data => this.setState({data, loaded: true}))
+            .then(data => this.init(data))
+            .then(_ => this.setState({loaded: true}))
     }
-    
-    init() {
-        // once we get the json, this is called
 
-        // set the first category 
-        let category_ = this.state.data[0].category
+    init(data) {
+        // once we get the json, this is called
+        // (takes the data directly: React batches setState, so this.state.data isn't updated yet here)
+        this.setState({data})
+
+        // set the first category
+        let category_ = data[0].category
         let categories = {}
 
         let tmp = []
 
         // for each emoji, set row
-        for (let emoji of this.state.data) {
+        for (let emoji of data) {
             // set emoji data
             let single_emoji = {
                 text: emoji.emoji,
